@@ -7,36 +7,26 @@ namespace WordDetector
 {
     public class LenghtFilter
     {
-        private readonly Dictionary<int, List<string>> _indexedWords;
+        private readonly HashSet<string> _indexedWords;
         private readonly int _smallestWord;
 
-        public LenghtFilter(IEnumerable<string> words, int subWordMinLenght = 3) 
+        public LenghtFilter(IEnumerable<string> words, int subWordMinLenght = 3)
         {
-            _indexedWords = new Dictionary<int, List<string>>();
+            _indexedWords = new HashSet<string>();
             _smallestWord = subWordMinLenght;
 
             SetVocabulary(words);
         }
         private void SetVocabulary(IEnumerable<string> words)
         {
-            foreach (var word in words) 
+            foreach (var item in words)
             {
-                if (word.Length<_smallestWord)
-                {
-                    continue;
-                }
-
-                if (!_indexedWords.TryGetValue(word.Length, out var wordIndex))
-                {
-                    wordIndex = new List<string>();
-                    _indexedWords.Add(word.Length, wordIndex);
-                }
-                wordIndex.Add(word);
+                _indexedWords.Add(item.ToLower());
             }
         }
-        public List<string> GetSubWords(string word) 
+        public List<string> GetSubWords(string word)
         {
-            if (word==null)
+            if (word == null)
             {
                 throw new NullReferenceException();
             }
@@ -45,7 +35,7 @@ namespace WordDetector
             while (true)
             {
                 var subLenght = word.Length - i;
-                if (subLenght<_smallestWord)
+                if (subLenght < _smallestWord)
                 {
                     break;
                 }
@@ -53,13 +43,9 @@ namespace WordDetector
                 for (var j = subLenght; j >= _smallestWord; j--)
                 {
                     var subWord = word.Substring(i, j);
-                    if (_indexedWords.TryGetValue(j, out var wordIndex))
+                    if (_indexedWords.Contains(subWord.ToLower()))
                     {
-                        if (!wordIndex.Any(x=> x.ToLower()==subWord.ToLower()))
-                        {
-                            continue;
-                        }
-                        result.Add(subWord.ToLower());
+                        result.Add(subWord);
                         i += j - 1;
                         break;
                     }
@@ -68,6 +54,5 @@ namespace WordDetector
             }
             return result;
         }
-
     }
 }

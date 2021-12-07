@@ -11,7 +11,7 @@ namespace Tests
 
         public GetSubWordsMethodTest() 
         {
-            var fileReader = new FileReader(path: @"C:\words\dict");
+            var fileReader = new FileReader(path: @"..\..\..\de-dictionary.tsv");
             _instance = new LenghtFilter(words: fileReader.GetWords());
         } 
 
@@ -80,20 +80,6 @@ namespace Tests
 
             // Assert
             Assert.Throws<NullReferenceException>(()=>_instance.GetSubWords(word));
-        }
-
-        [Fact]
-        public void GetSubWords_ShouldReturnLowerCase()
-        {
-            // Arrange
-            var word = "BüRo";
-
-            // Act
-            var subWord = _instance.GetSubWords(word);
-
-            // Assert
-            Assert.Contains("büro", subWord);
-            Assert.True(subWord.Count() == 1);
         }
     }
 }
