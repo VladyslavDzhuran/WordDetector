@@ -5,12 +5,12 @@ using System.Text;
 
 namespace WordDetector
 {
-    public class LenghtFilter
+    public class WordBreaker
     {
         private readonly HashSet<string> _indexedWords;
         private readonly int _smallestWord;
 
-        public LenghtFilter(IEnumerable<string> words, int subWordMinLenght = 3)
+        public WordBreaker(IEnumerable<string> words, int subWordMinLenght = 3)
         {
             _indexedWords = new HashSet<string>();
             _smallestWord = subWordMinLenght;

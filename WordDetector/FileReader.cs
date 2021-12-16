@@ -22,14 +22,9 @@ namespace WordDetector
 
         public IEnumerable<string> GetWords() 
         {
-            using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.Read))
-            {
-                using (var fileReader = new StreamReader(fileStream, Encoding.UTF8)) 
-                {
-                    return Regex.Split(fileReader.ReadToEnd(), @"([A-Z][a-zÄÖÜäöüẞß]*)").Select(word => word.Trim());
-                }
-            }
-        
+            using var fileStream = new FileStream(_path, FileMode.Open, FileAccess.Read);
+            using var fileReader = new StreamReader(fileStream, Encoding.UTF8);
+            return Regex.Split(fileReader.ReadToEnd(), @"([A-Z][a-zÄÖÜäöüẞß]*)").Select(word => word.Trim());
         }
     }
 }

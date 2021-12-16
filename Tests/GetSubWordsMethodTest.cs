@@ -7,12 +7,12 @@ namespace Tests
 {
     public class GetSubWordsMethodTest
     {
-        private readonly LenghtFilter _instance;
+        private readonly WordDetector.WordBreaker _instance;
 
         public GetSubWordsMethodTest() 
         {
             var fileReader = new FileReader(path: @"..\..\..\de-dictionary.tsv");
-            _instance = new LenghtFilter(words: fileReader.GetWords());
+            _instance = new WordDetector.WordBreaker(words: fileReader.GetWords());
         } 
 
         [Fact]

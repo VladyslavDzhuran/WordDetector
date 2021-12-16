@@ -5,10 +5,10 @@ namespace WordDetector
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var reader = new FileReader(path: @"..\..\..\Vocabulary\de-dictionary.tsv");
-            LenghtFilter breaker = new LenghtFilter(words: reader.GetWords());
+            WordBreaker breaker = new WordBreaker(words: reader.GetWords());
 
             while (true)
             {
